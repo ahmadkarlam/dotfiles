@@ -22,15 +22,11 @@ vim.g.mapleader = ","
 
 require("lazy").setup({
 	{ "scwood/vim-hybrid" },
-	-- {"scrooloose/nerdtree"},
 	"nvim-tree/nvim-tree.lua",
-	-- {"kien/ctrlp.vim"},
 	{ "jwalton512/vim-blade" },
 	{ "StanAngeloff/php.vim" },
 	{ "Yggdroot/indentLine" },
-	-- {"vim-airline/vim-airline"},
 	{ "vim-scripts/bash-support.vim" },
-	{ "editorconfig/editorconfig-vim" },
 	{ "roosta/srcery" },
 	{ "editorconfig/editorconfig-vim" },
 	{ "dracula/vim" },
@@ -39,7 +35,6 @@ require("lazy").setup({
 	{ "tpope/vim-surround" },
 	{ "fatih/vim-go", build = ":GoInstallBinaries" },
 	{ "sebdah/vim-delve" },
-	-- {"neoclide/coc.nvim", branch = "release"},
 	{ "airblade/vim-gitgutter" },
 	{
 		"junegunn/fzf",
