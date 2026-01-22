@@ -22,17 +22,24 @@ require("nvim-tree").setup({})
 -- lspconfig
 vim.lsp.config["intelephense"] = {}
 vim.lsp.enable("intelephense")
+-- lspconfig.intelephense.setup({})
 
 vim.lsp.config["gopls"] = {}
 vim.lsp.enable("gopls")
+-- lspconfig.gopls.setup{
+--     on_attach = function(client, bufnr)
+--         -- Add additional LSP setup here if needed
+--     end,
+--     capabilities = require'cmp_nvim_lsp'.default_capabilities(),
+-- }
 
 vim.lsp.config["jdtls"] = {}
 vim.lsp.enable("jdtls")
+-- lspconfig.jdtls.setup({})
 
-vim.lsp.config["clangd"] = {
-	cmd = { "clangd", "--background-index", "--clang-tidy" },
-}
+vim.lsp.config["clangd"] = {}
 vim.lsp.enable("clangd")
+-- lspconfig.clangd.setup({})
 
 -- Editor settings
 opt.linespace = 20
@@ -63,7 +70,7 @@ opt.cmdheight = 2
 opt.wildignore:append({ "*/tmp/*", "*.so", "*.swp", "*.zip", "node_modules" })
 
 -- Colorscheme
-cmd("colorscheme kanagawa")
+cmd("colorscheme nightfox")
 
 -- Leader key
 g.mapleader = ","
@@ -71,18 +78,19 @@ g.mapleader = ","
 -- Keybindings
 api.nvim_set_keymap("n", "<leader>w", ":w!<cr>", { noremap = true, silent = true, desc = "Save" })
 api.nvim_set_keymap("n", "<leader>q", ":q<cr>", { noremap = true, silent = true, desc = "Close" })
+api.nvim_set_keymap("i", "jj", "<esc>", { noremap = true, silent = true, desc = "Esc" })
 
 -- Window navigation
-api.nvim_set_keymap("n", "<C-j>", "<C-W><C-J>", { noremap = true })
-api.nvim_set_keymap("n", "<C-k>", "<C-W><C-K>", { noremap = true })
-api.nvim_set_keymap("n", "<C-l>", "<C-W><C-L>", { noremap = true })
-api.nvim_set_keymap("n", "<C-h>", "<C-W><C-H>", { noremap = true })
+api.nvim_set_keymap("n", "<C-J>", "<C-W><C-J>", { noremap = true })
+api.nvim_set_keymap("n", "<C-K>", "<C-W><C-K>", { noremap = true })
+api.nvim_set_keymap("n", "<C-L>", "<C-W><C-L>", { noremap = true })
+api.nvim_set_keymap("n", "<C-H>", "<C-W><C-H>", { noremap = true })
 
 -- NERDTree
 -- api.nvim_set_keymap("n", "<C-e>", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
 -- cmd("autocmd vimenter * NERDTree")
 --
-api.nvim_set_keymap("n", "<C-f>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+api.nvim_set_keymap("n", "<C-e>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
 -- CtrlP
 -- g.ctrlp_map = "<c-p>"
@@ -98,9 +106,7 @@ vim.keymap.set("n", "gd", tb.lsp_definitions, { noremap = true, silent = true, d
 vim.keymap.set("n", "gr", tb.lsp_references, { noremap = true, silent = true, desc = "Find references" })
 vim.keymap.set("n", "gi", tb.lsp_implementations, { noremap = true, silent = true, desc = "Go to implementation" })
 vim.keymap.set("n", "gp", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover code" })
-vim.keymap.set("n", "<leader>f", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show error" })
-
-vim.keymap.set("n", ":", "<cmd>FineCmdline<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show error" })
 
 -- Go settings
 g.go_fmt_command = "goimports"
@@ -109,13 +115,13 @@ g.syntastic_go_checkers = { "govet", "errcheck", "go" }
 -- Debugging (DAP)
 api.nvim_set_keymap(
 	"n",
-	"<Leader>t",
+	"<Leader>f",
 	":lua require('dap').continue()<CR>",
 	{ noremap = true, silent = true, desc = "Run/Debug" }
 )
 api.nvim_set_keymap(
 	"n",
-	"<Leader>tw",
+	"<Leader>fw",
 	":lua require('dap').close()<CR>",
 	{ noremap = true, silent = true, desc = "Close DAP" }
 )
@@ -139,7 +145,7 @@ api.nvim_set_keymap(
 )
 api.nvim_set_keymap(
 	"n",
-	"<Leader>s",
+	"<Leader>d",
 	":lua require('dap').toggle_breakpoint()<CR>",
 	{ noremap = true, silent = true, desc = "Toggle breakpoint" }
 )
@@ -151,7 +157,7 @@ end, { desc = "Evaluate variable" })
 g.EasyMotion_do_mapping = 0
 
 -- `s{char}{char}{label}` motion
-api.nvim_set_keymap("n", "r", "<Plug>(easymotion-overwin-f2)", {})
+api.nvim_set_keymap("n", "s", "<Plug>(easymotion-overwin-f2)", {})
 
 -- Enable case-insensitive search
 g.EasyMotion_smartcase = 1
@@ -159,8 +165,8 @@ g.EasyMotion_smartcase = 1
 -- JK motions: Line motions
 api.nvim_set_keymap("n", "f", "<Plug>(easymotion-bd-f)", { desc = "Jump char (before)" })
 api.nvim_set_keymap("n", "t", "<Plug>(easymotion-bd-t)", { desc = "Jump char (after)" })
-api.nvim_set_keymap("n", "<Leader>n", "<Plug>(easymotion-j)", { desc = "Jump char down" })
-api.nvim_set_keymap("n", "<Leader>e", "<Plug>(easymotion-k)", { desc = "Jump char up" })
+api.nvim_set_keymap("n", "<Leader>j", "<Plug>(easymotion-j)", { desc = "Jump char down" })
+api.nvim_set_keymap("n", "<Leader>k", "<Plug>(easymotion-k)", { desc = "Jump char up" })
 
 -- Formatter on save
 augroup("__formatter__", { clear = true })
@@ -169,10 +175,11 @@ autocmd("BufWritePost", {
 	command = ":FormatWrite",
 })
 
-vim.keymap.set("n", "<leader>;;", function()
+vim.keymap.set("n", "<C-p>", function()
 	tb.find_files({})
 end, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>tg", function()
+vim.keymap.set("n", "<leader>fg", function()
 	tb.live_grep({})
 end, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>;", tb.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>p", tb.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fh", tb.help_tags, { desc = "Telescope help tags" })

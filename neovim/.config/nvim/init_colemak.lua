@@ -22,17 +22,24 @@ require("nvim-tree").setup({})
 -- lspconfig
 vim.lsp.config["intelephense"] = {}
 vim.lsp.enable("intelephense")
+-- lspconfig.intelephense.setup({})
 
 vim.lsp.config["gopls"] = {}
 vim.lsp.enable("gopls")
+-- lspconfig.gopls.setup{
+--     on_attach = function(client, bufnr)
+--         -- Add additional LSP setup here if needed
+--     end,
+--     capabilities = require'cmp_nvim_lsp'.default_capabilities(),
+-- }
 
 vim.lsp.config["jdtls"] = {}
 vim.lsp.enable("jdtls")
+-- lspconfig.jdtls.setup({})
 
-vim.lsp.config["clangd"] = {
-	cmd = { "clangd", "--background-index", "--clang-tidy" },
-}
+vim.lsp.config["clangd"] = {}
 vim.lsp.enable("clangd")
+-- lspconfig.clangd.setup({})
 
 -- Editor settings
 opt.linespace = 20
@@ -63,7 +70,7 @@ opt.cmdheight = 2
 opt.wildignore:append({ "*/tmp/*", "*.so", "*.swp", "*.zip", "node_modules" })
 
 -- Colorscheme
-cmd("colorscheme kanagawa")
+cmd("colorscheme nightfox")
 
 -- Leader key
 g.mapleader = ","
@@ -73,10 +80,10 @@ api.nvim_set_keymap("n", "<leader>w", ":w!<cr>", { noremap = true, silent = true
 api.nvim_set_keymap("n", "<leader>q", ":q<cr>", { noremap = true, silent = true, desc = "Close" })
 
 -- Window navigation
-api.nvim_set_keymap("n", "<C-j>", "<C-W><C-J>", { noremap = true })
-api.nvim_set_keymap("n", "<C-k>", "<C-W><C-K>", { noremap = true })
-api.nvim_set_keymap("n", "<C-l>", "<C-W><C-L>", { noremap = true })
-api.nvim_set_keymap("n", "<C-h>", "<C-W><C-H>", { noremap = true })
+api.nvim_set_keymap("n", "<C-N>", "<C-W><C-J>", { noremap = true })
+api.nvim_set_keymap("n", "<C-E>", "<C-W><C-K>", { noremap = true })
+api.nvim_set_keymap("n", "<C-I>", "<C-W><C-L>", { noremap = true })
+api.nvim_set_keymap("n", "<C-M>", "<C-W><C-H>", { noremap = true })
 
 -- NERDTree
 -- api.nvim_set_keymap("n", "<C-e>", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
@@ -98,9 +105,7 @@ vim.keymap.set("n", "gd", tb.lsp_definitions, { noremap = true, silent = true, d
 vim.keymap.set("n", "gr", tb.lsp_references, { noremap = true, silent = true, desc = "Find references" })
 vim.keymap.set("n", "gi", tb.lsp_implementations, { noremap = true, silent = true, desc = "Go to implementation" })
 vim.keymap.set("n", "gp", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover code" })
-vim.keymap.set("n", "<leader>f", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show error" })
-
-vim.keymap.set("n", ":", "<cmd>FineCmdline<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show error" })
 
 -- Go settings
 g.go_fmt_command = "goimports"

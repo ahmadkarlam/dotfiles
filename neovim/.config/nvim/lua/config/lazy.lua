@@ -49,6 +49,7 @@ require("lazy").setup({
 	{ "mhartington/formatter.nvim" },
 	{ "hat0uma/csvview.nvim" },
 	{ "folke/tokyonight.nvim" },
+	{ "rebelot/kanagawa.nvim" },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
@@ -114,6 +115,10 @@ require("lazy").setup({
 			or "make",
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
+		rules = {
+			project_dir = ".avante/rules", -- relative to project root, can also be an absolute path
+			global_dir = "~/.config/avante/rules", -- absolute path
+		},
 		---@module 'avante'
 		---@type avante.Config
 		opts = {
@@ -129,9 +134,9 @@ require("lazy").setup({
 					endpoint = "https://openrouter.ai/api/v1",
 					model = "x-ai/grok-4-fast",
 					model_names = {
+						"x-ai/grok-4-fast",
 						"x-ai/grok-4-fast:free",
 						"google/gemini-2.0-flash-001",
-						"x-ai/grok-4-fast",
 					},
 					api_key_name = "OPENROUTER_API_KEY",
 					extra_headers = {
@@ -199,5 +204,38 @@ require("lazy").setup({
 		config = function()
 			require("mcphub").setup()
 		end,
+	},
+	{
+		"VonHeikemen/fine-cmdline.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		config = function()
+			require("fine-cmdline").setup()
+		end,
+	},
+	{
+		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		config = true,
+		keys = {
+			{ "<leader>c", nil, desc = "AI/Claude Code" },
+			{ "<leader>cc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			{ "<leader>cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			{ "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+			{ "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+			{ "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+				"<leader>cs",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file",
+				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+			},
+			-- Diff management
+			{ "<leader>ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
 	},
 })
